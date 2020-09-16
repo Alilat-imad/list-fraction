@@ -1,9 +1,19 @@
 package shared;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class Partition {
+/** 
+* Represents a shared library function about split up 
+* This Partition class implements an application that
+* simply fraction-up a list to multiple sub-list based on portion number.
+*
+* @author  Imad ALILAT
+* @version 1.0
+*/
+
+public final class Partition {
 	
 	private final List<Integer> list;
 	private final int portion;
@@ -13,8 +23,8 @@ public class Partition {
 		this.portion = portion;
 	}
 
-	
-	public final List<Integer>[] getSubListsByPortion(){
+
+	public final List<List<Integer>> getSubListsByPortion(){
 		
 		if(this.list == null) {
 			System.out.println("Exception raised - FS001 : Please, enter a valid list of integer. Example : [1, 2 , 3] ");
@@ -28,7 +38,7 @@ public class Partition {
 		
 		int partitionNb = this.getPartitionNb();
 		
-		List<Integer>[] partitions = this.createPartition(partitionNb);
+		List<Integer>[] partitions = this.createPartitionBy(partitionNb);
 		
 		for(int i = 0; i < list.size(); i++) {
 			
@@ -36,11 +46,11 @@ public class Partition {
 			
 			partitions[position].add(list.get(i));
 		}
-		return partitions;
+		
+		return Arrays.asList(partitions);
 	}
 	
 	public final int getPartitionNb() {
-		
 		int size = this.list.size();
 		int rest = size % this.portion;
 		int division = size / this.portion;
@@ -48,10 +58,10 @@ public class Partition {
 		return (rest == 0) ? division : ++division;	
 	}
 	
-	public final List<Integer>[] createPartition(int pNb){
-		List<Integer>[] partitions = new ArrayList[pNb];
-		
-		for(int i = 0; i < pNb; i++)
+	public final List<Integer>[] createPartitionBy(int partitionNb){
+		@SuppressWarnings("unchecked")
+		List<Integer>[] partitions = new ArrayList[partitionNb];
+		for(int i = 0; i < partitionNb; i++)
 			partitions[i] = new ArrayList<Integer>();
 		
 		return partitions;
